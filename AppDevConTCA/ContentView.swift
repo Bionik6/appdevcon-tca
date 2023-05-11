@@ -1,4 +1,5 @@
 import SwiftUI
+import ComposableArchitecture
 
 
 class Model: ObservableObject {
@@ -27,6 +28,56 @@ class Model: ObservableObject {
     }
   }
 }
+
+
+struct FactTextFieldDomain: ReducerProtocol {
+  struct State: Equatable {
+    var title: String
+    var value: String = ""
+  }
+  
+  enum Action: Equatable {
+    case onValueChanged(String)
+  }
+  
+  func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    switch action {
+      case .onValueChanged(let newValue):
+        state.value = newValue
+        return .none
+    }
+  }
+}
+
+
+struct FactTextField: View {
+  let store: StoreOf<FactTextFieldDomain>
+  
+  init(store: StoreOf<FactTextFieldDomain>) {
+    self.store = store
+  }
+  
+  var body: some View {
+    WithViewStore(store) { viewStore in
+      TextField(text: viewStore.binding(
+        get: \.value,
+        send: FactTextFieldDomain.Action.onValueChanged
+      )) {
+        Text(viewStore.title)
+      }.keyboardType(.numberPad)
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
 
 struct ContentView: View {
   @ObservedObject var model: Model
