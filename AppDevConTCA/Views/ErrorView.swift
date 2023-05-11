@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct ErrorView: View {
-  private let error: Error
+  private let error: String
   private let retryHandler: () -> ()
   
-  init(error: Error, retryHandler: @escaping () -> Void) {
+  init(error: String, retryHandler: @escaping () -> Void) {
     self.error = error
     self.retryHandler = retryHandler
   }
@@ -16,7 +16,7 @@ struct ErrorView: View {
         .font(.title2)
         .fontWeight(.medium)
       
-      Text(error.localizedDescription)
+      Text(error)
         .font(.body)
       
       Button(action: retryHandler) {
