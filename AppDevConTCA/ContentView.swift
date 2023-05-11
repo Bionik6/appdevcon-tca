@@ -49,7 +49,6 @@ struct FactTextFieldDomain: ReducerProtocol {
   }
 }
 
-
 struct FactTextField: View {
   let store: StoreOf<FactTextFieldDomain>
   
@@ -71,8 +70,47 @@ struct FactTextField: View {
 
 
 
+struct FactTypePickerDomain: ReducerProtocol {
+  struct State: Equatable {
+    var selectedValue: String = "trivia"
+    var types = ["trivia", "math", "year"]
+  }
+  
+  enum Action: Equatable {
+    case onValueChanged(String)
+  }
+  
+  func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    switch action {
+      case .onValueChanged(let newValue):
+        state.selectedValue = newValue
+        return .none
+    }
+  }
+}
 
 
+
+struct FactTypePicker: View {
+  let store: StoreOf<FactTypePickerDomain>
+  
+  init(store: StoreOf<FactTypePickerDomain>) {
+    self.store = store
+  }
+  
+  var body: some View {
+    WithViewStore(store) { viewStore in
+      Picker("Type", selection: viewStore.binding(
+        get: \.selectedValue,
+        send: FactTypePickerDomain.Action.onValueChanged
+      )) {
+        ForEach(viewStore.types, id: \.self) { type in
+          Text(type.capitalized)
+        }
+      }
+    }
+  }
+}
 
 
 
