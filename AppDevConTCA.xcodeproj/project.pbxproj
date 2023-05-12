@@ -110,6 +110,8 @@
 			dependencies = (
 			);
 			name = AppDevConTCA;
+			packageProductDependencies = (
+			);
 			productName = AppDevConTCA;
 			productReference = 40A98B832A0D6A87003C86F4 /* AppDevConTCA.app */;
 			productType = "com.apple.product-type.application";
@@ -138,6 +140,8 @@
 				Base,
 			);
 			mainGroup = 40A98B7A2A0D6A87003C86F4;
+			packageReferences = (
+			);
 			productRefGroup = 40A98B842A0D6A87003C86F4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
